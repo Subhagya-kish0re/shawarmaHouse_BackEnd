@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @Document(collection = "orders")
@@ -18,11 +19,15 @@ public class Orders {
 
     private String userId;
 
+    private String userName;
+
+    private String Username;
+
     private LocalDateTime orderDate;
 
     private String status;
 
-    private List<MenuItem> items;
+    private HashMap<String, Integer> itemsWithQuantity;
 
     private int totalAmount;
 
