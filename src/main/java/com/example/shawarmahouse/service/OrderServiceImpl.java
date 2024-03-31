@@ -2,6 +2,7 @@ package com.example.shawarmahouse.service;
 
 import com.example.shawarmahouse.model.Orders;
 import com.example.shawarmahouse.repository.OrdersRepository;
+import com.example.shawarmahouse.util.OrderStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     @Override
-    public Orders createOrder(String userId, String username,
+    public Orders createOrder(String userId, String username,String phonenumber,
                               HashMap<String, Integer> itemsWithQuantity, int totalAmount) {
         log.info("placing order with userid"+userId);
         LocalDateTime orderDate = LocalDateTime.now();
@@ -34,7 +35,8 @@ public class OrderServiceImpl implements OrderService{
                 .userId(userId)
                 .orderDate(orderDate)
                 .userName(username)
-                .status("Ordered")
+                .phoneNumber(phonenumber)
+                .status((OrderStatus.ORDERED).toString())
                 .itemsWithQuantity(itemsWithQuantity)
                 .totalAmount(totalAmount)
 
@@ -47,6 +49,18 @@ public class OrderServiceImpl implements OrderService{
     public Optional<Orders> getOrderById(String orderId) {
         return ordersRepository.findById(orderId);
     }
+
+    @Override
+    public List<Orders> orderList() {
+        log.info("getting all orders");
+        return (List<Orders>) ordersRepository.findAll();
+    }
+
+    @Override
+    public List<Orders> getOrdersWithStatusOrdered() {
+        return ordersRepository.findByStatus(OrderStatus.ORDERED.toString());
+    }
+
 
 
 }

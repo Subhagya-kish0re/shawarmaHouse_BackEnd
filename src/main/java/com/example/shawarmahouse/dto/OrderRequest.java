@@ -22,6 +22,8 @@ public class OrderRequest {
 
     private String userName;
 
+    private String phoneNumber;
+
     @JsonProperty(required = true)
 //    @NotBlank(message = "Please provide a valid phone number")
     private HashMap<String,Integer> itemsWithQuantity;

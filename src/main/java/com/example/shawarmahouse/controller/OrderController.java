@@ -40,8 +40,18 @@ public class OrderController {
 //        HashMap<String, Integer> itemsWithQuantity = (HashMap<String, Integer>) orderRequest.get("itemsWithQuantity");
 //        int totalAmount = (int) orderRequest.get("totalAmount");
 
-        Orders order = orderService.createOrder(orderRequest.getUserId(),orderRequest.getUserName(),orderRequest.getItemsWithQuantity(),orderRequest.getTotalAmount());
+        Orders order = orderService.createOrder(orderRequest.getUserId(),orderRequest.getUserName(),orderRequest.getPhoneNumber(),orderRequest.getItemsWithQuantity(),orderRequest.getTotalAmount());
 //        (userId, status, itemsWithQuantity, totalAmount);
         return new ResponseEntity<>(order, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getAllOrders")
+    public List<Orders> getAllOrders() {
+        return orderService.orderList();
+    }
+
+    @GetMapping("/ordered")
+    public List<Orders> getOrdersWithStatusOrdered() {
+        return orderService.getOrdersWithStatusOrdered();
     }
 }

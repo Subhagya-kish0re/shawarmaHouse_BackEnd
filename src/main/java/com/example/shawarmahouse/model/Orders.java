@@ -1,5 +1,6 @@
 package com.example.shawarmahouse.model;
 
+import com.example.shawarmahouse.util.OrderStatus;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -7,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 
 @Document(collection = "orders")
 @Builder
@@ -21,9 +21,10 @@ public class Orders {
 
     private String userName;
 
-    private String Username;
+    private String phoneNumber;
 
     private LocalDateTime orderDate;
+
 
     private String status;
 
