@@ -1,22 +1,20 @@
 package com.example.shawarmahouse.model;
 
+
 import com.example.shawarmahouse.util.OrderStatus;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-@Document(collection = "orders")
+@Document(collection = "allorders")
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Orders {
+public class AllOrders {
 
     @Id
     private String id;
@@ -27,7 +25,7 @@ public class Orders {
 
     private String phoneNumber;
 
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
 
     private OrderStatus status;

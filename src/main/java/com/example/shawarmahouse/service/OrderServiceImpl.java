@@ -2,6 +2,7 @@ package com.example.shawarmahouse.service;
 
 import com.example.shawarmahouse.model.Orders;
 import com.example.shawarmahouse.repository.OrdersRepository;
+import com.example.shawarmahouse.util.OrderNotFoundException;
 import com.example.shawarmahouse.util.OrderStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
                 .orderDate(orderDate)
                 .userName(username)
                 .phoneNumber(phonenumber)
-                .status((OrderStatus.ORDERED).toString())
+                .status((OrderStatus.ORDERED))
                 .itemsWithQuantity(itemsWithQuantity)
                 .totalAmount(totalAmount)
 
@@ -61,6 +62,21 @@ public class OrderServiceImpl implements OrderService{
         return ordersRepository.findByStatus(OrderStatus.ORDERED.toString());
     }
 
+        @Override
+    public Orders updateOrderStatus(String orderId, OrderStatus newStatus) {
+        log.info("Updating order status of "+orderId + " to "+newStatus);
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with id " + orderId));
+        order.setStatus(newStatus);
+        return ordersRepository.save(order);
+    }
+
+    @Override
+    public void removeOrder(String orderId) {
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with id " + orderId));
+        ordersRepository.delete(order);
+    }
 
 
 }
