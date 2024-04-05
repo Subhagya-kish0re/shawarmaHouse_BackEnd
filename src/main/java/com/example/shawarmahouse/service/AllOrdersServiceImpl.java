@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -21,6 +22,27 @@ public class AllOrdersServiceImpl implements AllOrdersService{
     @Override
     public AllOrders savingOrderDetails(Orders order) {
         log.info("saving order with userid");
+        AllOrders allorders= buildNewAllOrder(order);
+
+
+
+        log.info("order saved");
+        AllOrders allOrders1= allOrdersRepository.save(allorders);
+        return allOrders1;
+    }
+
+    @Override
+    public int getOrderCountByPhoneNumber(String phoneNumber) {
+        return allOrdersRepository.countByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public List<AllOrders> getOrdersByPhoneNumber(String phoneNumber) {
+        return allOrdersRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    private AllOrders buildNewAllOrder(Orders order) {
+
         LocalDate orderDate = LocalDate.now();
         AllOrders allOrders= AllOrders.builder()
                 .id(order.getId()).
@@ -32,11 +54,6 @@ public class AllOrdersServiceImpl implements AllOrdersService{
                 .status(order.getStatus())
                 .totalAmount(order.getTotalAmount())
                 .build();
-
-
-
-        log.info("order saved");
-        AllOrders allOrders1= allOrdersRepository.save(order);
-        return allOrders1;
+        return  allOrders;
     }
 }
