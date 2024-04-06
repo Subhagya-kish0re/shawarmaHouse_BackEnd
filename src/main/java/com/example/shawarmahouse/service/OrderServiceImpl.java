@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +60,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<Orders> getOrdersWithStatusOrdered() {
-        return ordersRepository.findByStatus(OrderStatus.ORDERED.toString());
+        return ordersRepository.findByStatus(OrderStatus.ORDERED);
     }
 
         @Override
@@ -78,5 +79,13 @@ public class OrderServiceImpl implements OrderService{
         ordersRepository.delete(order);
     }
 
+    @Override
+    public List<Orders> findOrdersByStatuses(List<OrderStatus> statuses) {
+        List<Orders> orders = new ArrayList<>();
+        for (OrderStatus status : statuses) {
+            orders.addAll(ordersRepository.findByStatus(status));
+        }
+        return orders;
+    }
 
 }

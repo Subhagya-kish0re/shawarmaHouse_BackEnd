@@ -20,4 +20,6 @@ public interface OrderService {
     Orders updateOrderStatus(String orderId, OrderStatus newStatus);
 
     void removeOrder(String orderId);
+
+    List<Orders> findOrdersByStatuses(List<OrderStatus> statuses);
 }

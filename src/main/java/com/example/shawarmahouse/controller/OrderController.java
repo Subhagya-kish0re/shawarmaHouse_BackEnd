@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,5 +97,11 @@ public class OrderController {
         AllOrders neworder = allOrdersService.savingOrderDetails(order);
 //        (userId, status, itemsWithQuantity, totalAmount);
         return new ResponseEntity<>(neworder, HttpStatus.CREATED);
+    }
+    @GetMapping("/status")
+    public ResponseEntity<List<Orders>> getOrdersByStatuses() {
+        List<OrderStatus> orderStatusList= Arrays.asList(OrderStatus.ORDERED,OrderStatus.READY,OrderStatus.DELIVERED,OrderStatus.PAID);
+        List<Orders> orders = orderService.findOrdersByStatuses(orderStatusList);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 }
