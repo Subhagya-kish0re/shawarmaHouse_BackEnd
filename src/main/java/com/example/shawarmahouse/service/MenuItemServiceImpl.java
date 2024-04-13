@@ -3,8 +3,11 @@ package com.example.shawarmahouse.service;
 import com.example.shawarmahouse.model.MenuItem;
 import com.example.shawarmahouse.repository.MenuItemRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.Binary;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -38,4 +41,19 @@ public class MenuItemServiceImpl implements MenuItemService{
         log.info("getting menu item by name");
      return menuItemRepository.findByName(name).orElseThrow(()->new NullPointerException(name));
     }
+
+    @Override
+    public MenuItem addMenuItem(String name, String description, int price, String category, String photolink, String subCategory) throws IOException, IOException {
+        log.info("creating a new menu item");
+        MenuItem menuItem=MenuItem.builder()
+                .name(name)
+                .description(description)
+                .category(category)
+                .subCategory(subCategory)
+                .photo(photolink)
+                .price(price)
+                .build();
+        return menuItemRepository.save(menuItem);
+    }
+
 }
