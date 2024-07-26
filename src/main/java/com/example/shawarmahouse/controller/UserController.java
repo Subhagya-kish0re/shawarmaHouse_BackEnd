@@ -51,6 +51,17 @@ public class UserController {
         List<User> users=userService.getUserList();
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
+        @GetMapping("/gettokens")
+    public ResponseEntity<Long>getTokens(@RequestParam String phoneNumber){
+        long tokens= userService.getTokens(phoneNumber);
+        return new ResponseEntity<>(tokens,HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<User>updateTokens(@RequestParam String phoneNumber,@RequestParam Long token){
+        User user=userService.updateTokens(phoneNumber,token);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
 
 
 }

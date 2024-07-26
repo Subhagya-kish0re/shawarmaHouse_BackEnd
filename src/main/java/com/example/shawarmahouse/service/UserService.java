@@ -13,4 +13,8 @@ public interface UserService {
     User createUserIfNotPresent(@Valid UserRequest userRequest);
 
     List<User> getUserList();
+
+    long getTokens(String phoneNumber);
+
+    User updateTokens(String phoneNumber,Long token);
 }

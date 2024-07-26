@@ -23,4 +23,6 @@ public class UserRequest {
     @NotBlank(message = "Please provide a valid phone number")
     @Pattern(regexp = "^\\d{10}$", message = "Phone number must be exactly 10 digits")
     private String phoneNumber;
+
+
 }

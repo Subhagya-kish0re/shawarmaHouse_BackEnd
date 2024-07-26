@@ -46,11 +46,27 @@ public class UserServiceImpl implements UserService{
         return (List<User>) userRepository.findAll();
     }
 
+    @Override
+    public long getTokens(String phoneNumber) {
+        log.info("Fetching tokens for "+phoneNumber);
+        User user=userRepository.findByPhone(phoneNumber);
+        return user.getTokens();
+    }
+
+    @Override
+    public User updateTokens(String phoneNumber,Long token) {
+        log.info("Setting new token"+token);
+        User user=userRepository.findByPhone(phoneNumber);
+        user.setTokens(token);
+        return user;
+    }
+
     private User toUserData(UserRequest userRequest) {
         log.info("Converting request to User Data:",userRequest);
         return User.builder()
                 .name(userRequest.getName())
                 .phone(userRequest.getPhoneNumber())
+                .tokens(0)
                 .build();
     }
 }

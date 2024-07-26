@@ -24,5 +24,7 @@ public class User {
     @Pattern(regexp = "^\\d{10}$", message = "Phone number must be exactly 10 digits")
     private String phone;
 
+    private long tokens;
+
 
 }
