@@ -23,10 +23,10 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the packaged JAR file from the build stage
-COPY --from=build /app/target/shawarmaHouse-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/the-shawarma-hub.jar the-shawarma-hub.jar
 
 # Expose port 9090
 EXPOSE 9090
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "shawarmaHouse-0.0.1-SNAPSHOT.jar app.jar"]
+ENTRYPOINT ["java", "-jar", "/the-shawarma-hub.jar"]
