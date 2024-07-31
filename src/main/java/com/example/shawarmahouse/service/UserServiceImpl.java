@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService{
         log.info("Setting new token"+token);
         User user=userRepository.findByPhone(phoneNumber);
         user.setTokens(token);
-        return user;
+        return userRepository.save(user);
     }
 
     private User toUserData(UserRequest userRequest) {
