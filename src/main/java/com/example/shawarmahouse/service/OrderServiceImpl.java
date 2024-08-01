@@ -41,7 +41,6 @@ public class OrderServiceImpl implements OrderService{
                 .status((OrderStatus.ORDERED))
                 .itemsWithQuantity(itemsWithQuantity)
                 .totalAmount(totalAmount)
-
                 .build();
         log.info("order placed");
         return ordersRepository.save(order);

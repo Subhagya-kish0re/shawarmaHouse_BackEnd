@@ -34,7 +34,7 @@ public class Orders {
 
     private HashMap<String, Integer> itemsWithQuantity;
 
-    private int totalAmount;
+    private long totalAmount;
 
 
 }
