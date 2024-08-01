@@ -45,7 +45,7 @@ public class AllOrdersController {
         return new ResponseEntity<>(orderCount, HttpStatus.OK);
     }
 
-    @GetMapping("/byPhoneNumber/{phoneNumber}")
+    @GetMapping("/byphonenumber/{phoneNumber}")
     public ResponseEntity<List<AllOrders>> getOrdersByPhoneNumber(@PathVariable String phoneNumber) {
         List<AllOrders> orders = allOrdersService.getOrdersByPhoneNumber(phoneNumber);
         return new ResponseEntity<>(orders, HttpStatus.OK);

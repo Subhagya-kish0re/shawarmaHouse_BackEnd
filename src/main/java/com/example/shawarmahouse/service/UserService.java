@@ -17,4 +17,6 @@ public interface UserService {
     long getTokens(String phoneNumber);
 
     User updateTokens(String phoneNumber,Long token);
+
+    User updateUserName(String username, String phoneNumber);
 }

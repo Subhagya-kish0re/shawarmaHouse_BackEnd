@@ -61,6 +61,14 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
+    @Override
+    public User updateUserName(String username, String phoneNumber) {
+        log.info("updating username");
+        User user=userRepository.findByPhone(phoneNumber);
+        user.setName(username);
+        return userRepository.save(user);
+    }
+
     private User toUserData(UserRequest userRequest) {
         log.info("Converting request to User Data:",userRequest);
         return User.builder()

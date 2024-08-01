@@ -63,5 +63,11 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
+    @PutMapping("/updateName")
+    public ResponseEntity<User>updateName(@RequestParam String username,@RequestParam String phoneNumber){
+        User user=userService.updateUserName(username,phoneNumber);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
 
 }
