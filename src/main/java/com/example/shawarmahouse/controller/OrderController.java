@@ -15,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -87,7 +90,7 @@ public class OrderController {
         LocalDateTime orderDate = LocalDateTime.now();
         Orders order = Orders.builder()
                 .userId(orderRequest.getUserId())
-                .orderDate(orderDate)
+                .orderDate(currentDateTime())
                 .userName(orderRequest.getUserName())
                 .phoneNumber(orderRequest.getPhoneNumber())
                 .status((OrderStatus.PAID))
@@ -103,5 +106,19 @@ public class OrderController {
         List<OrderStatus> orderStatusList= Arrays.asList(OrderStatus.ORDERED,OrderStatus.READY,OrderStatus.DELIVERED,OrderStatus.PAID);
         List<Orders> orders = orderService.findOrdersByStatuses(orderStatusList);
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+    private String currentDateTime(){
+        // Current time in local timezone
+        LocalDateTime orderDate = LocalDateTime.now();
+
+        // Convert to IST timezone
+        ZonedDateTime istDateTime = orderDate.atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+
+        // Format as string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = istDateTime.format(formatter);
+
+        return formattedDate;
     }
 }

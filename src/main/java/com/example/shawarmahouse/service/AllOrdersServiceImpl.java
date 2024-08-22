@@ -7,6 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -46,7 +50,7 @@ public class AllOrdersServiceImpl implements AllOrdersService{
         LocalDate orderDate = LocalDate.now();
         AllOrders allOrders= AllOrders.builder()
                 .id(order.getId()).
-                orderDate(orderDate).
+                orderDate(currentDateTime()).
                 userName(order.getUserName()).
                 userId(order.getUserId()).
                 phoneNumber(order.getPhoneNumber())
@@ -55,5 +59,19 @@ public class AllOrdersServiceImpl implements AllOrdersService{
                 .totalAmount(order.getTotalAmount())
                 .build();
         return  allOrders;
+    }
+    private String currentDateTime(){
+        // Current time in local timezone
+        LocalDateTime orderDate = LocalDateTime.now();
+
+        // Convert to IST timezone
+        ZonedDateTime istDateTime = orderDate.atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+
+        // Format as string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = istDateTime.format(formatter);
+
+        return formattedDate;
     }
 }

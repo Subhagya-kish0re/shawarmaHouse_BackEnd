@@ -24,7 +24,7 @@ public class AllOrders {
 
     private String phoneNumber;
 
-    private LocalDate orderDate;
+    private String orderDate;
 
 
     private OrderStatus status;
