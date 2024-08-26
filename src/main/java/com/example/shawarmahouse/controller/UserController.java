@@ -52,13 +52,13 @@ public class UserController {
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
         @GetMapping("/gettokens")
-    public ResponseEntity<Long>getTokens(@RequestParam String phoneNumber){
-        long tokens= userService.getTokens(phoneNumber);
+    public ResponseEntity<Double>getTokens(@RequestParam String phoneNumber){
+        double tokens= userService.getTokens(phoneNumber);
         return new ResponseEntity<>(tokens,HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<User>updateTokens(@RequestParam String phoneNumber,@RequestParam Long token){
+    public ResponseEntity<User>updateTokens(@RequestParam String phoneNumber,@RequestParam Double token){
         User user=userService.updateTokens(phoneNumber,token);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }

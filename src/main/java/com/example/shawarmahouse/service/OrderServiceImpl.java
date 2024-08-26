@@ -11,10 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -37,6 +34,7 @@ public class OrderServiceImpl implements OrderService{
         log.info("placing order with userid"+userId);
         LocalDateTime orderDate = LocalDateTime.now();
         Orders order = Orders.builder()
+                .id(generateRandomId())
                 .userId(userId)
                 .orderDate(currentDateTime())
                 .userName(username)
@@ -47,6 +45,14 @@ public class OrderServiceImpl implements OrderService{
                 .build();
         log.info("order placed");
         return ordersRepository.save(order);
+    }
+
+    private static String generateRandomId() {
+        Random random = new Random();
+        // Generate a random number between 10000 and 999999 (5-6 digits)
+        int randomId = 10000 + random.nextInt(900000);
+        // Convert the number to a string
+        return String.valueOf(randomId);
     }
 
     @Override

@@ -47,14 +47,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public long getTokens(String phoneNumber) {
+    public Double getTokens(String phoneNumber) {
         log.info("Fetching tokens for "+phoneNumber);
         User user=userRepository.findByPhone(phoneNumber);
         return user.getTokens();
     }
 
     @Override
-    public User updateTokens(String phoneNumber,Long token) {
+    public User updateTokens(String phoneNumber,Double token) {
         log.info("Setting new token"+token);
         User user=userRepository.findByPhone(phoneNumber);
         user.setTokens(token);
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService{
         return User.builder()
                 .name(userRequest.getName())
                 .phone(userRequest.getPhoneNumber())
-                .tokens(0)
+                .tokens(0.00)
                 .build();
     }
 }
