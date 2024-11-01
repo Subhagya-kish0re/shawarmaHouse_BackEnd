@@ -5,6 +5,7 @@ import com.example.shawarmahouse.repository.OrdersRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Component
 public class Scheduler {
     private final WebClient webClient;
 
@@ -29,12 +31,12 @@ public class Scheduler {
                 .bodyToMono(String.class)
                 .subscribe(response -> {
                     // Handle the response
-                    log.info("Response: " + response);
-                    System.out.println("Response: " + response);
+//                    log.info("Response: " + response);
+//                    System.out.println("Response: " + response);
                 }, error -> {
                     // Handle any errors
-                    log.info("Error occurred: " + error.getMessage());
-                    System.err.println("Error occurred: " + error.getMessage());
+                    log.info("Error occurred in scheduler: " + error.getMessage());
+                    System.err.println("Error occurred in scheduler: " + error.getMessage());
                 });
     }
 }
