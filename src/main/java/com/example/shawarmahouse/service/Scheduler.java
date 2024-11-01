@@ -3,8 +3,10 @@ package com.example.shawarmahouse.service;
 import com.example.shawarmahouse.model.Orders;
 import com.example.shawarmahouse.repository.OrdersRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,18 +14,27 @@ import java.util.List;
 @Service
 @Slf4j
 public class Scheduler {
-    private final OrdersRepository ordersRepository;
+    private final WebClient webClient;
 
-    public Scheduler(OrdersRepository ordersRepository) {
-        this.ordersRepository = ordersRepository;
+    @Autowired
+    public Scheduler(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1").build();
     }
 
-    @Scheduled(cron = "0 */14 * * * ?") // Every minute
-    public void logMessage() {
-            List< Orders>orders = (List<Orders>) ordersRepository.findAll();
-            if(orders.size()!=0){
-                log.info("Succesfull");
-            }
-        System.out.println("Log Message: This is a scheduled log message | Time: " + LocalDateTime.now());
+    @Scheduled(fixedRate = 600000) // Run every 10 minutes
+    public void fetchShawarmaData() {
+        webClient.get()
+                .uri("/test")
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribe(response -> {
+                    // Handle the response
+                    log.info("Response: " + response);
+                    System.out.println("Response: " + response);
+                }, error -> {
+                    // Handle any errors
+                    log.info("Error occurred: " + error.getMessage());
+                    System.err.println("Error occurred: " + error.getMessage());
+                });
     }
 }
