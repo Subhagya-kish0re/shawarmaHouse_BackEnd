@@ -1,5 +1,7 @@
 package com.example.shawarmahouse.controller;
 
+import com.example.shawarmahouse.dto.OrderDetailsInfo;
+import com.example.shawarmahouse.dto.UpdateTokenRequest;
 import com.example.shawarmahouse.dto.UserRequest;
 import com.example.shawarmahouse.model.User;
 import com.example.shawarmahouse.service.UserService;
@@ -58,9 +60,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<User>updateTokens(@RequestParam String phoneNumber,@RequestParam Double token){
-        User user=userService.updateTokens(phoneNumber,token);
-        return new ResponseEntity<>(user,HttpStatus.OK);
+    public ResponseEntity<OrderDetailsInfo>updateTokens(@RequestBody UpdateTokenRequest updateTokenRequest){
+        OrderDetailsInfo orderDetailsInfo=userService.updateTokens(updateTokenRequest);
+        return new ResponseEntity<>(orderDetailsInfo,HttpStatus.OK);
     }
 
     @PutMapping("/updateName")

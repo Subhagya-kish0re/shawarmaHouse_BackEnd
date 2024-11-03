@@ -1,5 +1,7 @@
 package com.example.shawarmahouse.service;
 
+import com.example.shawarmahouse.dto.OrderDetailsInfo;
+import com.example.shawarmahouse.dto.UpdateTokenRequest;
 import com.example.shawarmahouse.dto.UserRequest;
 import com.example.shawarmahouse.model.User;
 import jakarta.validation.Valid;
@@ -16,7 +18,8 @@ public interface UserService {
 
     Double getTokens(String phoneNumber);
 
-    User updateTokens(String phoneNumber,Double token);
 
     User updateUserName(String username, String phoneNumber);
+
+    OrderDetailsInfo updateTokens(UpdateTokenRequest updateTokenRequest);
 }
